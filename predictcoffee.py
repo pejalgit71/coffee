@@ -212,6 +212,8 @@ if uploaded_file is not None:
         fig = px.scatter(forecast, x='ds', y='yhat', facet_col='month', title="Trellis Display for Future Predictions")
         st.plotly_chart(fig)
     elif future_chart_type == 'Mosaic Display':
+        forecast['ds'] = pd.to_datetime(forecast['ds'])  # Ensure 'ds' is datetime
+        forecast['month'] = forecast['ds'].dt.month      # Create 'month' column
         fig = px.treemap(forecast, path=['month', 'yhat'], values='yhat', title="Mosaic Display for Future Predictions")
         st.plotly_chart(fig)
 
